@@ -10,18 +10,31 @@ class JogoHome extends StatefulWidget {
   _JogoHome createState() => _JogoHome();
 }
 
-_gestureDetector(
-    double right, double bottom, int index, Function onTap, Icon icon) {
+_gestureDetector(double right, double bottom, int index, Function onTap, Icon icon) {
   return (GestureDetector(
     onTap: onTap,
     child: Container(
       height: 100,
       width: 100,
-      color: Colors.blue,
+      color: Colors.lightBlueAccent,//Color(0xFF40C4FF),
       child: icon,
       margin: EdgeInsets.only(right: right, bottom: bottom),
     ),
   ));
+}
+
+_positioned(double top, double left, double width, double height, double rotation){
+  return  
+    Positioned(
+        top: top,
+        left: left,
+        width: width,
+        height: height,
+        child: RotationTransition(
+          turns: AlwaysStoppedAnimation(rotation / 360),
+          child: Container(color:  Colors.green),
+        )
+    );
 }
 
 class _JogoHome extends State<JogoHome> {
@@ -30,7 +43,7 @@ class _JogoHome extends State<JogoHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.blueGrey[200],
+        backgroundColor: Colors.blueGrey[50],
         appBar: AppBar(
           title: Text(widget.title),
         ),
@@ -38,6 +51,10 @@ class _JogoHome extends State<JogoHome> {
           child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
+                    Stack(
+                      alignment: Alignment.center,
+                      children: <Widget>[
+
                     Container(
                       height: 320,
                       width: 320,
@@ -45,6 +62,7 @@ class _JogoHome extends State<JogoHome> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
+                          
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
@@ -105,17 +123,32 @@ class _JogoHome extends State<JogoHome> {
                               }),
                             ],
                           ),
+                        
                         ],
                       ),
                     ),
-                    Padding(
+                    
+                    _positioned(52, 10, 300, 5, 0),
+                    _positioned(158, 10, 300, 5, 0),
+                    _positioned(262, 10, 300, 5, 0),
+
+                    _positioned(10, 52, 5, 300, 0),
+                    _positioned(10, 158, 5, 300, 0),
+                    _positioned(10, 262, 5, 300, 0),
+
+                    _positioned(158, null, 400, 5, 45),
+                    _positioned(158, null, 400, 5, 135),
+
+                  ],
+                ),
+                Padding(
                       padding: EdgeInsets.only(top: 10), 
                       child: _gestureDetector(0, 0, 0,
                           jogoCotroller.buttinClean,
                           Icon(Icons.clear_all, size: 60,)),
-                    )
-                  ],
-                ),
+                    ),
+              ],
+            ),
         ));
   }
 }
