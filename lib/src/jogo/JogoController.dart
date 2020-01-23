@@ -342,7 +342,6 @@ class JogoCotroller {
         size: 70,
     );
   }
-
   getIconWinner() {    
     return  material.Icon(  
         player == 0 ? 
