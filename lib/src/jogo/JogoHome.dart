@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:get_it/get_it.dart';
 import 'package:jogo_da_velha/src/jogo/JogoController.dart';
+import 'package:jogo_da_velha/src/jogo/Scoreboard.dart';
+import 'package:jogo_da_velha/src/jogo/SelectPlayers.dart';
+
+import 'ButtonNewPlayer.dart';
 
 class JogoHome extends StatefulWidget {
   JogoHome({Key key, this.title}) : super(key: key);
@@ -11,7 +16,7 @@ class JogoHome extends StatefulWidget {
 }
 
 class _JogoHome extends State<JogoHome> {
-  JogoCotroller _jogoCotroller = JogoCotroller();
+  final _jogoController = GetIt.I.get<JogoCotroller>();
 
 
   _gestureDetector(double right, double bottom, int index, Function onTap, Icon icon) {
@@ -41,8 +46,6 @@ _positioned(double top, double left, double width, double height, double rotatio
       );
 }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,6 +57,7 @@ _positioned(double top, double left, double width, double height, double rotatio
           child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
+                    Scoreboard(),
                     Stack(
                       alignment: Alignment.center,
                       children: <Widget>[
@@ -71,18 +75,18 @@ _positioned(double top, double left, double width, double height, double rotatio
                                 children: <Widget>[
                                   Observer(builder: (_) {
                                     return _gestureDetector(5,5,1,
-                                        _jogoCotroller.button1Action,
-                                        _jogoCotroller.icon1);
+                                        _jogoController.button1Action,
+                                        _jogoController.icon1);
                                   }),
                                   Observer(builder: (_) {
                                     return _gestureDetector(5, 5, 2,
-                                        _jogoCotroller.button2Action,
-                                        _jogoCotroller.icon2);
+                                        _jogoController.button2Action,
+                                        _jogoController.icon2);
                                   }),
                                   Observer(builder: (_) {
                                     return _gestureDetector(0, 5, 3,
-                                        _jogoCotroller.button3Action,
-                                        _jogoCotroller.icon3);
+                                        _jogoController.button3Action,
+                                        _jogoController.icon3);
                                   }),
                                 ],
                               ),
@@ -91,18 +95,18 @@ _positioned(double top, double left, double width, double height, double rotatio
                                 children: <Widget>[
                                   Observer(builder: (_) {
                                     return _gestureDetector(5, 5, 4,
-                                        _jogoCotroller.button4Action,
-                                        _jogoCotroller.icon4);
+                                        _jogoController.button4Action,
+                                        _jogoController.icon4);
                                   }),
                                 Observer(builder: (_) {
                                     return _gestureDetector(5, 5, 5,
-                                        _jogoCotroller.button5Action,
-                                        _jogoCotroller.icon5);
+                                        _jogoController.button5Action,
+                                        _jogoController.icon5);
                                   }),
                                 Observer(builder: (_) {
                                     return _gestureDetector(0, 5, 6,
-                                        _jogoCotroller.button6Action,
-                                        _jogoCotroller.icon6);
+                                        _jogoController.button6Action,
+                                        _jogoController.icon6);
                                   }),
                                 ],
                               ),
@@ -111,18 +115,18 @@ _positioned(double top, double left, double width, double height, double rotatio
                                 children: <Widget>[
                                   Observer(builder: (_) {
                                     return _gestureDetector(5, 0, 7,
-                                        _jogoCotroller.button7Action,
-                                        _jogoCotroller.icon7);
+                                        _jogoController.button7Action,
+                                        _jogoController.icon7);
                                   }),
                                   Observer(builder: (_) {
                                     return _gestureDetector(5, 0, 8,
-                                        _jogoCotroller.button8Action,
-                                        _jogoCotroller.icon8);
+                                        _jogoController.button8Action,
+                                        _jogoController.icon8);
                                   }),
                                   Observer(builder: (_) {
                                     return _gestureDetector(0, 0, 9,
-                                        _jogoCotroller.button9Action,
-                                        _jogoCotroller.icon9);
+                                        _jogoController.button9Action,
+                                        _jogoController.icon9);
                                   }),
                                 ],
                               ),
@@ -132,40 +136,35 @@ _positioned(double top, double left, double width, double height, double rotatio
                         ),
                         
                          Observer(builder: (_) {
-                          return _positioned(52, 10, 300, 5, 0, _jogoCotroller.animateLine1.value);
+                          return _positioned(52, 10, 300, 5, 0, _jogoController.animateLine1.value);
                          }),
                          Observer(builder: (_) {
-                          return _positioned(158, 10, 300, 5, 0, _jogoCotroller.animateLine2.value);
+                          return _positioned(158, 10, 300, 5, 0, _jogoController.animateLine2.value);
                          }),
                          Observer(builder: (_) {
-                          return _positioned(262, 10, 300, 5, 0, _jogoCotroller.animateLine3.value);
-                         }),
-
-                         Observer(builder: (_) {
-                          return _positioned(10, 52, 5, 300, 0, _jogoCotroller.animateColum1.value);
-                         }),
-                         Observer(builder: (_) {
-                          return _positioned(10, 158, 5, 300, 0, _jogoCotroller.animateColum2.value);
-                         }),
-                         Observer(builder: (_) {
-                          return _positioned(10, 262, 5, 300, 0, _jogoCotroller.animateColum3.value);
+                          return _positioned(262, 10, 300, 5, 0, _jogoController.animateLine3.value);
                          }),
 
                          Observer(builder: (_) {
-                          return _positioned(158, null, 400, 5, 45, _jogoCotroller.animateDiag1.value);
+                          return _positioned(10, 52, 5, 300, 0, _jogoController.animateColum1.value);
                          }),
                          Observer(builder: (_) {
-                          return _positioned(158, null, 400, 5, 135, _jogoCotroller.animateDiag2.value);
+                          return _positioned(10, 158, 5, 300, 0, _jogoController.animateColum2.value);
+                         }),
+                         Observer(builder: (_) {
+                          return _positioned(10, 262, 5, 300, 0, _jogoController.animateColum3.value);
+                         }),
+
+                         Observer(builder: (_) {
+                          return _positioned(158, null, 400, 5, 45, _jogoController.animateDiag1.value);
+                         }),
+                         Observer(builder: (_) {
+                          return _positioned(158, null, 400, 5, 135, _jogoController.animateDiag2.value);
                          }),
                       ],
                     ),
-                    
-                Padding(
-                  padding: EdgeInsets.only(top: 10), 
-                  child: _gestureDetector(0, 0, 0,
-                      _jogoCotroller.buttonClean,
-                      Icon(Icons.clear_all, size: 60,)),
-                ),
+                ButtonNewPlayer(),
+                SelectPlayers(),
               ],
             ),
         ));

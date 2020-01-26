@@ -59,6 +59,11 @@ class JogoCotroller {
 
   var animateDiag1 = Observable(false);
   var animateDiag2 = Observable(false);
+  
+  var player1 = Observable(0);
+  var player2 = Observable(0);
+
+  var twoPayers = Observable(false);
 
   // #endregion
 
@@ -76,7 +81,9 @@ class JogoCotroller {
       buttonClean,
       printWinnerLine,
       printWinnerCol,
-      printWinnerDiag;
+      printWinnerDiag,
+      winnerAdd,
+      setTwoPayers;
 
    // #endregion
 
@@ -94,6 +101,8 @@ class JogoCotroller {
     printWinnerLine = Action(_printWinnerLine);
     printWinnerCol = Action(_printWinnerCol);
     printWinnerDiag = Action(_printWinnerDiag);
+    winnerAdd = Action(_winnerAdd);
+    setTwoPayers = Action(_setTwoPayers);
 
     autorun((_){
      // print("animateLine1.value ${animateLine1.value}");
@@ -288,6 +297,7 @@ class JogoCotroller {
 
   _printWinnerLine(int x){
     _playing = false;
+    _winnerAdd();
     if(x == 0)
       animateLine1.value = true;
     else if(x == 1)
@@ -298,6 +308,7 @@ class JogoCotroller {
 
   _printWinnerCol(int y){
     _playing = false;
+    _winnerAdd();
     if(y == 0)
       animateColum1.value = true;
     else if(y == 1)
@@ -308,10 +319,15 @@ class JogoCotroller {
 
   _printWinnerDiag(int diag){
     _playing = false;
+    _winnerAdd();
     if(diag == 1)
       animateDiag1.value = true;
     else if(diag == 2)
       animateDiag2.value = true;
+  }
+
+  _winnerAdd(){
+    _player == 1 ? player1.value ++ : player2.value ++;
   }
 
   _buttonClean(){
@@ -345,6 +361,17 @@ class JogoCotroller {
     animateColum3.value = false;
     animateDiag1.value = false;
     animateDiag2.value = false;
+  }
+
+  cleanScoreboard(){
+    runInAction((){
+      player1.value = 0;
+      player2.value = 0;
+    });
+  }
+
+  _setTwoPayers(){
+    twoPayers.value = !twoPayers.value;
   }
 
   getIcon(){    
