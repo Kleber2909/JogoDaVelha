@@ -16,14 +16,13 @@ class SelectPlayers extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[              
-                  Text("2 Jogadores"),
                   Observer(builder: (_) {
                     return Checkbox(
-
                       value: _jogoController.twoPayers.value,
                       onChanged: (value) => _jogoController.setTwoPayers(),
                     );}
                   ),
+                  Text("2 Jogadores     "),
                 ],
               )
             );

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart' as material;
 import 'package:jogo_da_velha/src/jogo/Controller.dart';
 import 'package:mobx/mobx.dart';
@@ -8,6 +10,7 @@ class JogoCotroller {
   int _countClick = 0;
   int _player = 0;
   bool _playing = true;
+  List _board = [1,2,3,4,5,6,7,8,9];
 
   // #region variables Observable
 
@@ -114,7 +117,7 @@ class JogoCotroller {
   _button1Action() {
     if(_playing)
     if (_button1.value) {
-      if (_lastButtonClick.value == 1) {
+      if (_lastButtonClick.value == 1 && twoPayers.value) {
         _countClick--;
         _icon1.value = new material.Icon(null);
         _button1.value = false;
@@ -127,13 +130,14 @@ class JogoCotroller {
       _icon1.value = getIcon();
       _controller.setCheck(0, 0, _player);
       _checkWinner(0, 0);
+      _cpuPlayer(1);
     }
   }
 
   _button2Action() {
     if(_playing)
     if (_button2.value) {
-      if (_lastButtonClick.value == 2) {
+      if (_lastButtonClick.value == 2 && twoPayers.value) {
         _countClick--;
         _icon2.value = new material.Icon(null);
         _button2.value = false;
@@ -146,13 +150,14 @@ class JogoCotroller {
       _icon2.value = getIcon();
       _controller.setCheck(0, 1, _player);
       _checkWinner(0, 1);
+      _cpuPlayer(2);
     }
   }
 
   _button3Action() {
     if(_playing)
     if (_button3.value) {
-      if (_lastButtonClick.value == 3) {
+      if (_lastButtonClick.value == 3 && twoPayers.value) {
         _countClick--;
         _icon3.value = new material.Icon(null);
         _button3.value = false;
@@ -165,13 +170,14 @@ class JogoCotroller {
       _icon3.value = getIcon();
       _controller.setCheck(0, 2, _player);
       _checkWinner(0, 2);
+      _cpuPlayer(3);
     }
   }
 
   _button4Action() {
     if(_playing)
     if (_button4.value) {
-      if (_lastButtonClick.value == 4) {
+      if (_lastButtonClick.value == 4 && twoPayers.value) {
         _countClick--;
         _icon4.value = new material.Icon(null);
         _button4.value = false;
@@ -184,13 +190,14 @@ class JogoCotroller {
       _icon4.value = getIcon();
       _controller.setCheck(1, 0, _player);
       _checkWinner(1, 0);
+      _cpuPlayer(4);
     }
   }
 
   _button5Action() {
     if(_playing)
     if (_button5.value) {
-      if (_lastButtonClick.value == 5) {
+      if (_lastButtonClick.value == 5 && twoPayers.value) {
         _countClick--;
         _icon5.value = new material.Icon(null);
         _button5.value = false;
@@ -203,13 +210,14 @@ class JogoCotroller {
       _icon5.value = getIcon();
       _controller.setCheck(1, 1, _player);
       _checkWinner(1, 1);
+      _cpuPlayer(5);
     }
   }
 
   _button6Action() {
     if(_playing)
     if (_button6.value) {
-      if (_lastButtonClick.value == 6) {
+      if (_lastButtonClick.value == 6 && twoPayers.value) {
         _countClick--;
         _icon6.value = new material.Icon(null);
         _button6.value = false;
@@ -222,13 +230,14 @@ class JogoCotroller {
       _icon6.value = getIcon();
       _controller.setCheck(1, 2, _player);
       _checkWinner(1, 2);
+      _cpuPlayer(6);
     }
   }
 
   _button7Action() {
     if(_playing)
     if (_button7.value) {
-      if (_lastButtonClick.value == 7) {
+      if (_lastButtonClick.value == 7 && twoPayers.value) {
         _countClick--;
         _icon7.value = new material.Icon(null);
         _button7.value = false;
@@ -241,13 +250,14 @@ class JogoCotroller {
       _icon7.value = getIcon();
       _controller.setCheck(2, 0, _player);
       _checkWinner(2, 0);
+      _cpuPlayer(7);
     }
   }
 
   _button8Action() {
     if(_playing)
     if (_button8.value) {
-      if (_lastButtonClick.value == 8) {
+      if (_lastButtonClick.value == 8 && twoPayers.value) {
         _countClick--;
         _icon8.value = new material.Icon(null);
         _button8.value = false;
@@ -260,13 +270,14 @@ class JogoCotroller {
       _icon8.value = getIcon();
       _controller.setCheck(2, 1, _player);
       _checkWinner(2, 1);
+      _cpuPlayer(8);
     }
   }
 
   _button9Action() {
     if(_playing)
     if (_button9.value) {
-      if (_lastButtonClick.value == 9) {
+      if (_lastButtonClick.value == 9 && twoPayers.value) {
         _countClick--;
         _icon9.value = new material.Icon(null);
         _button9.value = false;
@@ -279,6 +290,7 @@ class JogoCotroller {
       _icon9.value = getIcon();
       _controller.setCheck(2, 2, _player);
       _checkWinner(2, 2);
+      _cpuPlayer(9);
     }
   }
 
@@ -335,6 +347,7 @@ class JogoCotroller {
     _countClick = 0;
     _lastButtonClick.value = 0;
     _playing = true;
+    _board = [1,2,3,4,5,6,7,8,9];
     _button1.value = false;
     _button2.value = false;
     _button3.value = false;
@@ -387,4 +400,44 @@ class JogoCotroller {
         size: 70,
     );
   }
+
+  _cpuPlayer(int value){
+    _board.remove(value);
+    
+    if(!twoPayers.value && _countClick%2 != 0 && _board.length > 0){
+      Random _random = Random();
+      int index = _board[_random.nextInt(_board.length)];
+
+      switch (index){
+        case 1:
+          button1Action();
+          break;
+        case 2:
+          button2Action();
+          break;
+        case 3:
+          button3Action();
+          break;
+        case 4:
+          button4Action();
+          break;
+        case 5:
+          button5Action();
+          break;
+        case 6:
+          button6Action();
+          break;
+        case 7:
+          button7Action();
+          break;
+        case 8:
+          button8Action();
+          break;
+        case 9:
+          button9Action();
+          break;
+      }
+    }
+  }
+
 }
