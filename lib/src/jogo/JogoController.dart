@@ -4,7 +4,7 @@ import 'package:flutter/material.dart' as material;
 import 'package:jogo_da_velha/src/jogo/Controller.dart';
 import 'package:mobx/mobx.dart';
 
-class JogoCotroller {
+class JogoCotroller { 
   Controller _controller = Controller();
 
   int _countClick = 0;
